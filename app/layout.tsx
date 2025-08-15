@@ -4,7 +4,7 @@ import NavBar from '../components/NavBar';
 
 export const metadata = {
   title: 'Seya Weber | Software Developer',
-  description: 'Portfolio of Seya Weber, Junior Software Developer',
+  description: 'Seya Weber, Project Engineer Software / Digitalisation',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
