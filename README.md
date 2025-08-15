@@ -1,2 +1,11 @@
 # portfoliov2
-New Variant of my personal Portfolio
+
+A simple, modern portfolio for a software developer built with Next.js and Tailwind CSS.
+
+## Development
+
+- `npm run dev` – start the development server
+- `npm run build` – build the application for production
+- `npm start` – start the production server
+
+The project structure is intentionally minimal and easy to expand with additional pages or components.
