@@ -1,17 +1,14 @@
 "use client";
 
 import FadeInSection from '../../components/FadeInSection';
-import { getContent } from '../../src/config';
-import { useLanguage } from '../../components/LanguageProvider';
+import { ideas } from '../../src/config';
 
 export default function IdeasPage() {
-  const { language } = useLanguage();
-  const { ideas } = getContent(language);
   return (
     <FadeInSection>
       <div className="max-w-5xl mx-auto py-20 space-y-6">
         <h1 className="text-3xl font-semibold text-center mb-8">
-          {language === 'de' ? 'Ideen & Ziele' : 'Ideas & Goals'}
+          Ideas & Goals
         </h1>
         <div className="grid gap-6 md:grid-cols-2">
           {ideas.map((idea, idx) => (
@@ -29,3 +26,4 @@ export default function IdeasPage() {
     </FadeInSection>
   );
 }
+

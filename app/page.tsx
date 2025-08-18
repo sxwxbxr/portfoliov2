@@ -3,12 +3,9 @@
 import ProjectCard from '../components/ProjectCard';
 import FadeInSection from '../components/FadeInSection';
 import TestimonialCard from '../components/TestimonialCard';
-import { getContent } from '../src/config';
-import { useLanguage } from '../components/LanguageProvider';
+import { projects, testimonials, toggles } from '../src/config';
 
 export default function Home() {
-  const { language } = useLanguage();
-  const { projects, testimonials, toggles } = getContent(language);
   return (
     <div className="space-y-24">
       <FadeInSection>
@@ -150,3 +147,4 @@ export default function Home() {
     </div>
   );
 }
+

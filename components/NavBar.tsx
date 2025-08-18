@@ -1,15 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react';
-import { FaUser } from 'react-icons/fa';
-import { getContent } from '../src/config';
-import { useLanguage } from './LanguageProvider';
+import { useRouter } from 'next/navigation';
+import { navLinks } from '../src/config';
+import { useAuth } from './AuthProvider';
 
 export default function NavBar() {
-  const { data: session } = useSession();
-  const { language } = useLanguage();
-  const { navLinks } = getContent(language);
+  const { isAuthenticated, logout } = useAuth();
+  const router = useRouter();
   return (
     <nav className="bg-gradient-to-r from-white/60 to-white/20 dark:from-gray-900/60 dark:to-gray-800/20 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
       <div className="max-w-5xl mx-auto flex items-center justify-between p-4">
@@ -25,6 +23,16 @@ export default function NavBar() {
               </Link>
             </li>
           ))}
+          {isAuthenticated && (
+            <li>
+              <Link
+                href="/private"
+                className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors transition-transform hover:scale-105"
+              >
+                Private
+              </Link>
+            </li>
+          )}
           <li>
             <a
               href="/assets/cv.pdf"
@@ -35,20 +43,22 @@ export default function NavBar() {
               CV
             </a>
           </li>
-          {!session ? (
+          {!isAuthenticated ? (
             <li>
               <Link
                 href="/login"
-                aria-label="Account"
                 className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors transition-transform hover:scale-105"
               >
-                <FaUser className="w-5 h-5" />
+                Login
               </Link>
             </li>
           ) : (
             <li>
               <button
-                onClick={() => signOut()}
+                onClick={() => {
+                  logout();
+                  router.push('/');
+                }}
                 className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors transition-transform hover:scale-105"
               >
                 Logout
@@ -60,3 +70,4 @@ export default function NavBar() {
     </nav>
   );
 }
+

@@ -8,22 +8,11 @@ import FadeInSection from '../../components/FadeInSection';
 export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch('/api/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    if (res.ok) {
-      router.push('/login');
-    } else {
-      const data = await res.json();
-      setError(data.error || 'Registration failed');
-    }
+    router.push('/login');
   };
 
   return (
@@ -48,13 +37,12 @@ export default function SignupPage() {
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 rounded-lg font-semibold shadow-md hover:from-purple-700 hover:to-pink-700 transition-colors transition-transform hover:scale-105"
-              >
-                Register
-              </button>
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 rounded-lg font-semibold shadow-md hover:from-purple-700 hover:to-pink-700 transition-colors transition-transform hover:scale-105"
+            >
+              Register
+            </button>
           </form>
           <p className="text-sm text-center mt-4">
             Already have an account?{' '}

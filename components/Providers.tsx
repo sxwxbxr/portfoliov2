@@ -1,13 +1,9 @@
 'use client';
 
-import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
-import { LanguageProvider } from './LanguageProvider';
+import { AuthProvider } from './AuthProvider';
 
 export default function Providers({ children }: { children: ReactNode }) {
-  return (
-    <SessionProvider>
-      <LanguageProvider>{children}</LanguageProvider>
-    </SessionProvider>
-  );
+  return <AuthProvider>{children}</AuthProvider>;
 }
+

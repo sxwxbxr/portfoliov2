@@ -1,13 +1,10 @@
 "use client";
 
-import { getContent } from '../../../src/config';
 import FadeInSection from '../../../components/FadeInSection';
-import { useLanguage } from '../../../components/LanguageProvider';
+import { projects } from '../../../src/config';
 import { useParams } from 'next/navigation';
 
 export default function ProjectPage() {
-  const { language } = useLanguage();
-  const { projects } = getContent(language);
   const params = useParams<{ slug: string }>();
   const project = projects.find((p) => p.slug === params.slug);
   if (!project) {
@@ -28,11 +25,11 @@ export default function ProjectPage() {
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{project.problem}</p>
         </section>
         <section>
-          <h2 className="text-2xl font-semibold mt-6">Ansatz</h2>
+          <h2 className="text-2xl font-semibold mt-6">Approach</h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{project.approach}</p>
         </section>
         <section>
-          <h2 className="text-2xl font-semibold mt-6">Ergebnis</h2>
+          <h2 className="text-2xl font-semibold mt-6">Result</h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{project.result}</p>
         </section>
         <section>
@@ -68,3 +65,4 @@ export default function ProjectPage() {
     </FadeInSection>
   );
 }
+
