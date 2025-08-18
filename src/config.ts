@@ -49,10 +49,10 @@ export const toggles = {
 
 export const testimonials = [
   {
-    quote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    name: 'Jane Doe',
+    quote: '“Seya Weber proved to be a reliable and diligent intern with strong analytical skills: he supported the installation, testing, and migration of medical database solutions and developed an application for the automated processing of patient questionnaires, which is already in productive use at major ENT clinics”',
+    name: 'Christoph Wille',
     role: 'CEO',
-    company: 'Example Inc.',
+    company: 'InnoForce Est.',
     avatar: 'https://placehold.co/100x100?text=Avatar',
   },
   {
@@ -69,31 +69,31 @@ export const projects = [
     slug: 'database-migration',
     title: 'Database Migration in France',
     description:
-      'Led GDPR-compliant migration of a medical database for InnoRechi EST.',
+      'Led GDPR-compliant migration of a medical database for InnoForce EST.',
     cover: 'https://placehold.co/600x400?text=Project+Cover',
-    problem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    approach: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    result: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    lessons: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    problem: 'Customer wasnt satisfied with the existing database solution.',
+    approach: 'Analysed the current database structure and created a migration plan.',
+    result: 'Successfully migrated the database with zero downtime and improved performance and customer satisfaction.',
+    lessons: 'Thorough documentation and testing are crucial for successful migrations.',
     metrics: [
-      { label: 'Users', value: '1000+' },
-      { label: 'Time Saved', value: '50%' },
+      { label: 'Users', value: '300+' },
+      { label: 'Increased uniformity', value: '50%' },
     ],
     liveUrl: '#',
     repoUrl: '#',
   },
   {
-    slug: 'village-network',
-    title: 'Village Network',
+    slug: 'mansion-project',
+    title: 'Mansion Project',
     description:
-      'Supported electrical planning and implementation for a Swiss village network at Leipcom GmbH.',
+      'Led and coordinated the implementation of a large-scale project infrastructure for a luxury mansion.',
     cover: 'https://placehold.co/600x400?text=Project+Cover',
-    problem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    approach: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    result: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    lessons: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    problem: 'Customer wished for a complex automation solution.',
+    approach: 'Suggested multiple different approaches, designs and technologies.',
+    result: 'Successfully implemented a robust automation solution that met all customer requirements.',
+    lessons: 'Collaboration and clear communication with stakeholders are key to project success.',
     metrics: [
-      { label: 'Nodes', value: '80+' },
+      { label: 'Different technologies', value: '10-15' },
       { label: 'Uptime', value: '99.9%' },
     ],
     liveUrl: '#',
@@ -103,12 +103,12 @@ export const projects = [
     slug: 'property-management-energy-monitoring',
     title: 'Property Management & Energy Monitoring',
     description:
-      'Developed a solution for energy data collection and property oversight with Leipcom GmbH.',
+      'Developed a solution for self-use of solar power and installation of e-mobility',
     cover: 'https://placehold.co/600x400?text=Project+Cover',
-    problem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    approach: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    result: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    lessons: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    problem: 'Customer wished for a comprehensive energy management solution.',
+    approach: 'Conducted a thorough analysis of energy consumption patterns and proposed tailored solutions.',
+    result: 'Successfully implemented a system for self-use of solar power and e-mobility integration.',
+    lessons: 'Understanding customer needs and providing customized solutions is crucial.',
     metrics: [
       { label: 'Properties', value: '200+' },
       { label: 'Energy Saved', value: '30%' },
@@ -120,14 +120,14 @@ export const projects = [
 
 export const ideas = [
   {
-    title: 'Personal App (in progress)',
-    goal: 'Goal: XYZ',
-    benefit: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Motocom (in progress)',
+    goal: 'Goal: Provide an app for motorcycle enthusiasts to track their rides and connect with other riders.',
+    benefit: 'Benefit: Helps riders stay connected and share their experiences.',
   },
   {
-    title: 'Open-source GitHub Project',
-    goal: 'Goal: Lorem ipsum',
-    benefit: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'MultiScreenKiosk',
+    goal: 'Goal: Create an easy to use way to display multiple apps and Browser Instances on one Screen',
+    benefit: 'Benefit: Provides a seamless multitasking experience for users.',
   },
 ] as Idea[];
 
