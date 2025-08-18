@@ -27,8 +27,8 @@ export interface Project {
   result: string;
   lessons: string;
   metrics: Metric[];
-  liveUrl: string;
-  repoUrl: string;
+  liveUrl?: string;
+  repoUrl?: string;
 }
 
 export interface Idea {
@@ -49,7 +49,7 @@ export const toggles = {
 
 export const testimonials = [
   {
-    quote: '“Seya Weber proved to be a reliable and diligent intern with strong analytical skills: he supported the installation, testing, and migration of medical database solutions and developed an application for the automated processing of patient questionnaires, which is already in productive use at major ENT clinics”',
+    quote: 'Seya Weber proved to be a reliable and diligent intern with strong analytical skills: he supported the installation, testing, and migration of medical database solutions and developed an application for the automated processing of patient questionnaires, which is already in productive use at major ENT clinics',
     name: 'Christoph Wille',
     role: 'CEO',
     company: 'InnoForce Est.',
