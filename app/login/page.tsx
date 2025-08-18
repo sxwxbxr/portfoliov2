@@ -16,7 +16,7 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (login(email, password)) {
-      router.push('/private');
+      router.push('/');
     } else {
       setError('Invalid credentials');
     }

@@ -26,10 +26,10 @@ export default function NavBar() {
           {isAuthenticated && (
             <li>
               <Link
-                href="/private"
+                href="/hub"
                 className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors transition-transform hover:scale-105"
               >
-                Private
+                Private Hub
               </Link>
             </li>
           )}
