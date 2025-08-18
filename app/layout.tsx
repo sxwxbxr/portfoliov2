@@ -1,6 +1,7 @@
 import './globals.css';
 import type { ReactNode } from 'react';
 import NavBar from '../components/NavBar';
+
 import Providers from '../components/Providers';
 
 export const metadata = {

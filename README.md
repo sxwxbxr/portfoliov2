@@ -7,6 +7,7 @@ The home page showcases experience, projects, education, skills, and contact det
 ## Development
 
 - `npm ci` – install dependencies
+
 - `npm run dev` – start the development server
 - `npm run build` – build the application for production
 - `npm start` – start the production server
