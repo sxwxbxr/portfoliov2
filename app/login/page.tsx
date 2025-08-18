@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import FadeInSection from '../../components/FadeInSection';
@@ -12,6 +12,28 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const router = useRouter();
   const { login } = useAuth();
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const defaultUsers = [
+      { email: 'admin@example.com', password: 'admin123', role: 'admin' },
+      { email: 'demo@example.com', password: 'demo123', role: 'user' },
+    ];
+
+    let updated = false;
+    defaultUsers.forEach((defaultUser) => {
+      if (!users.some((u: { email: string }) => u.email === defaultUser.email)) {
+        users.push(defaultUser);
+        updated = true;
+      }
+    });
+
+    if (updated) {
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
