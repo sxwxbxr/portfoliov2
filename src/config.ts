@@ -116,6 +116,40 @@ export const projects = [
     liveUrl: '#',
     repoUrl: '#',
   },
+  {
+    slug: 'motocom-app',
+    title: 'Motocom App',
+    description:
+      'Developed an app for motorcycle enthusiasts to track their rides and connect with other riders.',
+    cover: 'https://placehold.co/600x400?text=Project+Cover',
+    problem: 'No easy combined way to track rides and connect with other riders.',
+    approach: 'Conducted user research to identify key features and developed a user-friendly interface.',
+    result: 'Still in development.',
+    lessons: 'n/a',
+    metrics: [
+      { label: 'Users', value: 'n/a' },
+      { label: 'Rides Tracked', value: 'n/a' },
+    ],
+    liveUrl: '#',
+    repoUrl: '#',
+  },
+  {
+    slug: 'multiscreenkiosk-app',
+    title: 'MultiScreenKiosk App',
+    description:
+      'Developed an app for displaying multiple applications and browser instances on a single screen.',
+    cover: 'https://placehold.co/600x400?text=Project+Cover',
+    problem: 'No easy way to manage and display multiple applications simultaneously for events and presentations.',
+    approach: 'Developed a user-friendly interface for managing multiple applications.',
+    result: 'Works with multiple additional features implemented and planned.',
+    lessons: 'Thorough testing and user feedback are essential for successful multi-app management.',
+    metrics: [
+      { label: 'Users', value: '~10' },
+      { label: 'Instances Managed', value: '4 per page' },
+    ],
+    liveUrl: '#',
+    repoUrl: 'https://github.com/sxwxbxr/MultiScreenKiosk',
+  }
 ] as Project[];
 
 export const ideas = [
