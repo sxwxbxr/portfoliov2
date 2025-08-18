@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
+import { FaUser } from 'react-icons/fa';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -30,24 +31,15 @@ export default function NavBar() {
             </li>
           ))}
           {!session ? (
-            <>
-              <li>
-                <Link
-                  href="/login"
-                  className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/signup"
-                  className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  Sign Up
-                </Link>
-              </li>
-            </>
+            <li>
+              <Link
+                href="/auth"
+                aria-label="Account"
+                className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                <FaUser className="w-5 h-5" />
+              </Link>
+            </li>
           ) : (
             <li>
               <button
