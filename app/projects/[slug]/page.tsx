@@ -1,7 +1,14 @@
-import { projects } from '../../../src/config';
-import FadeInSection from '../../../components/FadeInSection';
+"use client";
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
+import { getContent } from '../../../src/config';
+import FadeInSection from '../../../components/FadeInSection';
+import { useLanguage } from '../../../components/LanguageProvider';
+import { useParams } from 'next/navigation';
+
+export default function ProjectPage() {
+  const { language } = useLanguage();
+  const { projects } = getContent(language);
+  const params = useParams<{ slug: string }>();
   const project = projects.find((p) => p.slug === params.slug);
   if (!project) {
     return <div className="max-w-5xl mx-auto py-20">Project not found.</div>;

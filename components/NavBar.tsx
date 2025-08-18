@@ -3,10 +3,13 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { FaUser } from 'react-icons/fa';
-import { navLinks } from '../src/config';
+import { getContent } from '../src/config';
+import { useLanguage } from './LanguageProvider';
 
 export default function NavBar() {
   const { data: session } = useSession();
+  const { language } = useLanguage();
+  const { navLinks } = getContent(language);
   return (
     <nav className="bg-gradient-to-r from-white/60 to-white/20 dark:from-gray-900/60 dark:to-gray-800/20 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
       <div className="max-w-5xl mx-auto flex items-center justify-between p-4">

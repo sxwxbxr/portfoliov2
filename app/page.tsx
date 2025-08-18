@@ -1,9 +1,14 @@
+"use client";
+
 import ProjectCard from '../components/ProjectCard';
 import FadeInSection from '../components/FadeInSection';
 import TestimonialCard from '../components/TestimonialCard';
-import { projects, testimonials, toggles } from '../src/config';
+import { getContent } from '../src/config';
+import { useLanguage } from '../components/LanguageProvider';
 
 export default function Home() {
+  const { language } = useLanguage();
+  const { projects, testimonials, toggles } = getContent(language);
   return (
     <div className="space-y-24">
       <FadeInSection>
@@ -23,7 +28,7 @@ export default function Home() {
           className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6"
         >
           <img
-            src="/public/assets/images/profile.jpg"
+            src="https://placehold.co/300x300?text=Profile"
             alt="Profile"
             className="w-32 h-32 rounded-full object-cover"
           />
