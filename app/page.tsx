@@ -49,6 +49,16 @@ export default function Home() {
           <h2 className="text-3xl font-semibold mb-8 text-center">Experience</h2>
           <div className="space-y-8">
             <div>
+              <h3 className="text-xl font-semibold">Project Manger Software and Digitalisation · Telsonic Ultrasonics</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">07/2025 – Present</p>
+              <ul className="list-disc list-inside mt-2 text-sm text-gray-600 dark:text-gray-300">
+                <li>Creating customer specific workflows.</li>
+              <li>Implementing company intern software projects to increase efficiency.</li>
+              <li>Adjusting post-setup automation workflows for customers</li>
+              <li>The link between customer and software, to ensure smooth communication and project success.</li>
+            </ul>
+          </div>
+            <div>
               <h3 className="text-xl font-semibold">Software Developer Apprentice · InnoForce EST</h3>
               <p className="text-sm text-gray-600 dark:text-gray-300">08/2022 – 07/2024</p>
               <ul className="list-disc list-inside mt-2 text-sm text-gray-600 dark:text-gray-300">

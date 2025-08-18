@@ -79,8 +79,7 @@ export const projects = [
       { label: 'Users', value: '300+' },
       { label: 'Increased uniformity', value: '50%' },
     ],
-    liveUrl: '#',
-    repoUrl: '#',
+    
   },
   {
     slug: 'mansion-project',
@@ -96,8 +95,7 @@ export const projects = [
       { label: 'Different technologies', value: '10-15' },
       { label: 'Uptime', value: '99.9%' },
     ],
-    liveUrl: '#',
-    repoUrl: '#',
+    
   },
   {
     slug: 'property-management-energy-monitoring',
@@ -113,8 +111,7 @@ export const projects = [
       { label: 'Properties', value: '200+' },
       { label: 'Energy Saved', value: '30%' },
     ],
-    liveUrl: '#',
-    repoUrl: '#',
+    
   },
   {
     slug: 'motocom-app',
@@ -130,8 +127,7 @@ export const projects = [
       { label: 'Users', value: 'n/a' },
       { label: 'Rides Tracked', value: 'n/a' },
     ],
-    liveUrl: '#',
-    repoUrl: '#',
+    
   },
   {
     slug: 'multiscreenkiosk-app',
@@ -147,7 +143,6 @@ export const projects = [
       { label: 'Users', value: '~10' },
       { label: 'Instances Managed', value: '4 per page' },
     ],
-    liveUrl: '#',
     repoUrl: 'https://github.com/sxwxbxr/MultiScreenKiosk',
   }
 ] as Project[];
