@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import FadeInSection from '../../components/FadeInSection';
 import { useAuth } from '../../components/AuthProvider';
-import HubPostForm, { Post } from '../../components/HubPostForm';
-import HubPostCard from '../../components/HubPostCard';
+import HubPostForm, { Post } from '../../components/hub/HubPostForm';
+import HubPostCard from '../../components/hub/HubPostCard';
+import FileManager from '../../components/hub/FileManager';
 
 export default function HubPage() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
   const router = useRouter();
   const [posts, setPosts] = useState<Post[]>([]);
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -54,10 +56,24 @@ export default function HubPage() {
     }
   }, []);
 
-  const addPost = (post: Post) => {
-    const updated = [post, ...posts];
+  const savePosts = (updated: Post[]) => {
     setPosts(updated);
     localStorage.setItem('hubPosts', JSON.stringify(updated));
+  };
+
+  const addPost = (post: Post) => {
+    savePosts([post, ...posts]);
+  };
+
+  const updatePost = (post: Post) => {
+    const updated = posts.map((p) => (p.id === post.id ? post : p));
+    savePosts(updated);
+    setEditingPost(null);
+  };
+
+  const deletePost = (postId: number) => {
+    const updated = posts.filter((p) => p.id !== postId);
+    savePosts(updated);
   };
 
   const vote = (postId: number, optionIndex: number) => {
@@ -70,8 +86,7 @@ export default function HubPage() {
       }
       return p;
     });
-    setPosts(updated);
-    localStorage.setItem('hubPosts', JSON.stringify(updated));
+    savePosts(updated);
   };
 
   if (!isAuthenticated) return null;
@@ -91,13 +106,26 @@ export default function HubPage() {
 
         <section className="p-6 rounded-xl bg-white/60 dark:bg-gray-800/60 shadow backdrop-blur space-y-4">
           <h2 className="text-xl font-semibold">Feed</h2>
-          <HubPostForm onAdd={addPost} />
+          <HubPostForm
+            onSubmit={editingPost ? updatePost : addPost}
+            editingPost={editingPost}
+            onCancel={() => setEditingPost(null)}
+          />
           <ul className="space-y-2">
             {posts.map((p) => (
-              <HubPostCard key={p.id} post={p} onVote={vote} />
+              <HubPostCard
+                key={p.id}
+                post={p}
+                onVote={vote}
+                onEdit={(post) => setEditingPost(post)}
+                onDelete={deletePost}
+                isAdmin={isAdmin}
+              />
             ))}
           </ul>
         </section>
+
+        <FileManager isAdmin={isAdmin} />
       </div>
     </FadeInSection>
   );
