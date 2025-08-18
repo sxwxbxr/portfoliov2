@@ -3,8 +3,8 @@ import type { ReactNode } from 'react';
 import NavBar from '../components/NavBar';
 
 export const metadata = {
-  title: 'Developer Portfolio',
-  description: 'Portfolio of a Software Developer',
+  title: 'Seya Weber | Software Developer',
+  description: 'Seya Weber, Project Engineer Software / Digitalisation',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
