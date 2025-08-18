@@ -34,17 +34,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = (email: string, password: string) => {
-    if (email === 'demo@example.com' && password === 'demo123') {
-      const demo = { email, role: 'user' as const };
-      setUser(demo);
-      localStorage.setItem('user', JSON.stringify(demo));
-      localStorage.setItem('isAuthenticated', 'true');
-      return true;
-    }
-    if (email === 'admin@example.com' && password === 'admin123') {
-      const admin = { email, role: 'admin' as const };
-      setUser(admin);
-      localStorage.setItem('user', JSON.stringify(admin));
+    const usersRaw = localStorage.getItem('users');
+    const users: Array<{ email: string; password: string; role: 'admin' | 'user' }> = usersRaw
+      ? JSON.parse(usersRaw)
+      : [];
+    const found = users.find((u) => u.email === email && u.password === password);
+    if (found) {
+      const authUser = { email: found.email, role: found.role } as const;
+      setUser(authUser);
+      localStorage.setItem('user', JSON.stringify(authUser));
       localStorage.setItem('isAuthenticated', 'true');
       return true;
     }

@@ -7,11 +7,16 @@ import { useAuth } from '../../components/AuthProvider';
 import ProjectsSection from '../../components/admin/ProjectsSection';
 import ExperiencesSection from '../../components/admin/ExperiencesSection';
 import SkillsSection from '../../components/admin/SkillsSection';
+import EducationSection from '../../components/admin/EducationSection';
+import TestimonialsSection from '../../components/admin/TestimonialsSection';
+import UsersSection from '../../components/admin/UsersSection';
 
 export default function AdminPage() {
   const { isAuthenticated, isAdmin } = useAuth();
   const router = useRouter();
-  const [tab, setTab] = useState<'projects' | 'experiences' | 'skills'>('projects');
+  const [tab, setTab] = useState<
+    'projects' | 'experiences' | 'skills' | 'education' | 'testimonials' | 'users'
+  >('projects');
 
   useEffect(() => {
     if (!isAuthenticated || !isAdmin) {
@@ -24,7 +29,7 @@ export default function AdminPage() {
   return (
     <FadeInSection>
       <div className="max-w-4xl mx-auto py-10 space-y-6">
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap gap-4">
           <button
             onClick={() => setTab('projects')}
             className={`px-4 py-2 rounded-md border ${tab === 'projects' ? 'bg-blue-500 text-white' : 'bg-white/60 dark:bg-gray-800/60'}`}
@@ -43,11 +48,32 @@ export default function AdminPage() {
           >
             Skills
           </button>
+          <button
+            onClick={() => setTab('education')}
+            className={`px-4 py-2 rounded-md border ${tab === 'education' ? 'bg-blue-500 text-white' : 'bg-white/60 dark:bg-gray-800/60'}`}
+          >
+            Education
+          </button>
+          <button
+            onClick={() => setTab('testimonials')}
+            className={`px-4 py-2 rounded-md border ${tab === 'testimonials' ? 'bg-blue-500 text-white' : 'bg-white/60 dark:bg-gray-800/60'}`}
+          >
+            Testimonials
+          </button>
+          <button
+            onClick={() => setTab('users')}
+            className={`px-4 py-2 rounded-md border ${tab === 'users' ? 'bg-blue-500 text-white' : 'bg-white/60 dark:bg-gray-800/60'}`}
+          >
+            Users
+          </button>
         </div>
         <div className="p-6 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur shadow">
           {tab === 'projects' && <ProjectsSection />}
           {tab === 'experiences' && <ExperiencesSection />}
           {tab === 'skills' && <SkillsSection />}
+          {tab === 'education' && <EducationSection />}
+          {tab === 'testimonials' && <TestimonialsSection />}
+          {tab === 'users' && <UsersSection />}
         </div>
       </div>
     </FadeInSection>
