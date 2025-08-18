@@ -21,72 +21,66 @@ export default function HubPage() {
   }, [isAuthenticated, router]);
 
   useEffect(() => {
-    const stored = localStorage.getItem('hubPosts');
-    if (stored) {
-      setPosts(JSON.parse(stored));
-    } else {
-      const initial: Post[] = [
-        {
-          id: 1,
-          type: 'news',
-          title: 'Welcome to the hub',
-          text: 'Share your updates with the crew.',
-        },
-        {
-          id: 2,
-          type: 'event',
-          title: 'When should the next LAN-Party be?',
-          options: [
-            { text: 'Friday', votes: 0 },
-            { text: 'Saturday', votes: 0 },
-          ],
-          endDate: '',
-        },
-        {
-          id: 3,
-          type: 'server',
-          name: 'Survival World',
-          ip: 'mc.example.com',
-          modpack: 'Modpack',
-          version: 'v2.1',
-        },
-      ];
-      setPosts(initial);
-      localStorage.setItem('hubPosts', JSON.stringify(initial));
-    }
-  }, []);
-
-  const savePosts = (updated: Post[]) => {
-    setPosts(updated);
-    localStorage.setItem('hubPosts', JSON.stringify(updated));
-  };
-
-  const addPost = (post: Post) => {
-    savePosts([post, ...posts]);
-  };
-
-  const updatePost = (post: Post) => {
-    const updated = posts.map((p) => (p.id === post.id ? post : p));
-    savePosts(updated);
-    setEditingPost(null);
-  };
-
-  const deletePost = (postId: number) => {
-    const updated = posts.filter((p) => p.id !== postId);
-    savePosts(updated);
-  };
-
-  const vote = (postId: number, optionIndex: number) => {
-    const updated = posts.map((p) => {
-      if (p.id === postId && p.type === 'event') {
-        const options = p.options.map((o, idx) =>
-          idx === optionIndex ? { ...o, votes: o.votes + 1 } : o
-        );
-        return { ...p, options };
+    const loadPosts = async () => {
+      const res = await fetch('/api/hub');
+      if (res.ok) {
+        const data = await res.json();
+        setPosts(data);
       }
-      return p;
+    };
+    if (isAuthenticated) loadPosts();
+  }, [isAuthenticated]);
+
+  const addPost = async (post: Post) => {
+    const res = await fetch('/api/hub', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(post),
     });
-    savePosts(updated);
+    if (res.ok) {
+      const created = await res.json();
+      setPosts([created, ...posts]);
+    }
+  };
+
+  const updatePost = async (post: Post) => {
+    const res = await fetch('/api/hub', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(post),
+    });
+    if (res.ok) {
+      const updated = await res.json();
+      setPosts(posts.map((p) => (p.id === updated.id ? updated : p)));
+      setEditingPost(null);
+    }
+  };
+
+  const deletePost = async (postId: number) => {
+    const res = await fetch(`/api/hub?id=${postId}`, { method: 'DELETE' });
+    if (res.ok) {
+      setPosts(posts.filter((p) => p.id !== postId));
+    }
+  };
+
+  const vote = async (postId: number, optionIndex: number) => {
+    const post = posts.find((p) => p.id === postId);
+    if (!post || post.type !== 'event') return;
+    const updatedPost: Post = {
+      ...post,
+      options: post.options.map((o, idx) =>
+        idx === optionIndex ? { ...o, votes: o.votes + 1 } : o
+      ),
+    } as Post;
+    const res = await fetch('/api/hub', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedPost),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setPosts(posts.map((p) => (p.id === data.id ? data : p)));
+    }
   };
 
   if (!isAuthenticated) return null;
