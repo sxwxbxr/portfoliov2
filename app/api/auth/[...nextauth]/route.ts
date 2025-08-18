@@ -13,9 +13,9 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) return null;
-        const user = findUser(credentials.email);
-        if (!user) return null;
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const user = await findUser(credentials.email);
+        if (!user?.hashedPassword) return null;
+        const isValid = await bcrypt.compare(credentials.password, user.hashedPassword);
         if (!isValid) return null;
         return { id: user.email, email: user.email };
       },

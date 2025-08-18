@@ -1,38 +1,16 @@
-import fs from 'fs';
-import path from 'path';
 import bcrypt from 'bcryptjs';
+import { User } from '@prisma/client';
+import prisma from './prisma';
 
-const dataFile = path.join(process.cwd(), 'data', 'users.json');
-
-export interface User {
-  email: string;
-  password: string; // hashed password
+export async function findUser(email: string): Promise<User | null> {
+  return prisma.user.findUnique({ where: { email } });
 }
 
-function readUsers(): User[] {
-  try {
-    const data = fs.readFileSync(dataFile, 'utf-8');
-    return JSON.parse(data) as User[];
-  } catch {
-    return [];
-  }
-}
-
-function writeUsers(users: User[]) {
-  fs.writeFileSync(dataFile, JSON.stringify(users, null, 2));
-}
-
-export function findUser(email: string): User | undefined {
-  const users = readUsers();
-  return users.find((u) => u.email === email);
-}
-
-export function registerUser(email: string, password: string) {
-  const users = readUsers();
-  if (users.some((u) => u.email === email)) {
+export async function registerUser(email: string, password: string, role?: string) {
+  const existing = await findUser(email);
+  if (existing) {
     throw new Error('User already exists');
   }
-  const hashed = bcrypt.hashSync(password, 10);
-  users.push({ email, password: hashed });
-  writeUsers(users);
+  const hashed = await bcrypt.hash(password, 10);
+  await prisma.user.create({ data: { email, hashedPassword: hashed, role } });
 }
