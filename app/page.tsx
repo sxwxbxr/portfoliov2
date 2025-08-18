@@ -1,8 +1,7 @@
 import ProjectCard from '../components/ProjectCard';
 import FadeInSection from '../components/FadeInSection';
-import ServiceCard from '../components/ServiceCard';
 import TestimonialCard from '../components/TestimonialCard';
-import { projects, services, testimonials, toggles } from '../src/config';
+import { projects, testimonials, toggles } from '../src/config';
 
 export default function Home() {
   return (
@@ -85,24 +84,6 @@ export default function Home() {
         </section>
       </FadeInSection>
 
-      {toggles.services && (
-        <FadeInSection>
-          <section id="services" className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-semibold mb-8 text-center">Services</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {services.map((service, idx) => (
-                <ServiceCard
-                  key={idx}
-                  title={service.title}
-                  description={service.description}
-                  points={service.points}
-                />
-              ))}
-            </div>
-          </section>
-        </FadeInSection>
-      )}
-
       <FadeInSection>
         <section id="education" className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-semibold mb-8 text-center">Education</h2>
@@ -161,22 +142,6 @@ export default function Home() {
           </section>
         </FadeInSection>
       )}
-
-      <FadeInSection>
-        <section id="contact" className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-semibold mb-8 text-center">Contact</h2>
-          <p className="text-sm text-center text-gray-600 dark:text-gray-300">
-            Reach me at{' '}
-            <a
-              href="mailto:sewb.business@proton.me"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              sewb.business@proton.me
-            </a>{' '}
-            or by phone at +41 79 899 11 12.
-          </p>
-        </section>
-      </FadeInSection>
     </div>
   );
 }

@@ -49,12 +49,12 @@ export default function SignupPage() {
               required
             />
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 rounded-lg font-semibold shadow-md hover:from-purple-700 hover:to-pink-700 transition-colors"
-            >
-              Register
-            </button>
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 rounded-lg font-semibold shadow-md hover:from-purple-700 hover:to-pink-700 transition-colors transition-transform hover:scale-105"
+              >
+                Register
+              </button>
           </form>
           <p className="text-sm text-center mt-4">
             Already have an account?{' '}

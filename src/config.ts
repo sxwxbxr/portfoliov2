@@ -4,12 +4,6 @@ export interface NavLink {
   visible: boolean;
 }
 
-export interface Service {
-  title: string;
-  description: string;
-  points: string[];
-}
-
 export interface Testimonial {
   quote: string;
   name: string;
@@ -46,43 +40,14 @@ export interface Publication {
 
 export const navLinks: NavLink[] = [
   { href: '/', label: 'Home', visible: true },
-  { href: '#about', label: 'About', visible: true },
-  { href: '#experience', label: 'Experience', visible: true },
-  { href: '#projects', label: 'Projects', visible: true },
-  { href: '#services', label: 'Services', visible: true },
-  { href: '#testimonials', label: 'Testimonials', visible: true },
-  { href: '#education', label: 'Education', visible: true },
-  { href: '#skills', label: 'Skills', visible: true },
-  { href: '#contact', label: 'Contact', visible: true },
   { href: '/publications', label: 'Publications', visible: true },
+  { href: '/contact', label: 'Contact', visible: true },
 ];
 
 export const toggles = {
-  services: true,
   testimonials: true,
   publications: true,
 };
-
-export const services: Service[] = [
-  {
-    title: 'Service One',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    points: [
-      'Lorem ipsum dolor sit amet',
-      'Consectetur adipiscing elit',
-      'Sed do eiusmod tempor',
-    ],
-  },
-  {
-    title: 'Service Two',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    points: [
-      'Ut enim ad minim veniam',
-      'Quis nostrud exercitation',
-      'Ullamco laboris nisi ut',
-    ],
-  },
-];
 
 export const testimonials: Testimonial[] = [
   {
