@@ -1,5 +1,8 @@
 import ProjectCard from '../components/ProjectCard';
 import FadeInSection from '../components/FadeInSection';
+import ServiceCard from '../components/ServiceCard';
+import TestimonialCard from '../components/TestimonialCard';
+import { projects, services, testimonials, toggles } from '../src/config';
 
 export default function Home() {
   return (
@@ -12,6 +15,31 @@ export default function Home() {
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
             Junior Software Developer based in Zürich, Switzerland.
           </p>
+        </section>
+      </FadeInSection>
+
+      <FadeInSection>
+        <section
+          id="about"
+          className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6"
+        >
+          <img
+            src="/public/assets/images/profile.jpg"
+            alt="Profile"
+            className="w-32 h-32 rounded-full object-cover"
+          />
+          <div>
+            <h2 className="text-3xl font-semibold">About Me</h2>
+            <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
         </section>
       </FadeInSection>
 
@@ -45,21 +73,35 @@ export default function Home() {
         <section id="projects" className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-semibold mb-8 text-center">Projects</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            <ProjectCard
-              title="Database Migration in France"
-              description="Led GDPR-compliant migration of a medical database for InnoRechi EST."
-            />
-            <ProjectCard
-              title="Village Network"
-              description="Supported electrical planning and implementation for a Swiss village network at Leipcom GmbH."
-            />
-            <ProjectCard
-              title="Property Management & Energy Monitoring"
-              description="Developed a solution for energy data collection and property oversight with Leipcom GmbH."
-            />
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.slug}
+                title={project.title}
+                description={project.description}
+                slug={project.slug}
+              />
+            ))}
           </div>
         </section>
       </FadeInSection>
+
+      {toggles.services && (
+        <FadeInSection>
+          <section id="services" className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-semibold mb-8 text-center">Services</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {services.map((service, idx) => (
+                <ServiceCard
+                  key={idx}
+                  title={service.title}
+                  description={service.description}
+                  points={service.points}
+                />
+              ))}
+            </div>
+          </section>
+        </FadeInSection>
+      )}
 
       <FadeInSection>
         <section id="education" className="max-w-5xl mx-auto">
@@ -100,6 +142,26 @@ export default function Home() {
         </section>
       </FadeInSection>
 
+      {toggles.testimonials && (
+        <FadeInSection>
+          <section id="testimonials" className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-semibold mb-8 text-center">Testimonials</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {testimonials.map((t, idx) => (
+                <TestimonialCard
+                  key={idx}
+                  quote={t.quote}
+                  name={t.name}
+                  role={t.role}
+                  company={t.company}
+                  avatar={t.avatar}
+                />
+              ))}
+            </div>
+          </section>
+        </FadeInSection>
+      )}
+
       <FadeInSection>
         <section id="contact" className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-semibold mb-8 text-center">Contact</h2>
@@ -118,4 +180,3 @@ export default function Home() {
     </div>
   );
 }
-
