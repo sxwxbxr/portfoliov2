@@ -8,6 +8,7 @@ interface SkillForm {
 }
 
 interface StoredSkill {
+  id: string;
   group: string;
   items: string[];
 }
@@ -17,30 +18,36 @@ export default function SkillsSection() {
   const [form, setForm] = useState<SkillForm>({ group: '', items: '' });
 
   useEffect(() => {
-    const stored = localStorage.getItem('skills');
-    if (stored) {
-      setSkills(JSON.parse(stored));
-    }
+    fetch('/api/skills')
+      .then((res) => res.json())
+      .then((data) => setSkills(data));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('skills', JSON.stringify(skills));
-  }, [skills]);
-
-  const addSkill = () => {
-    const newSkill: StoredSkill = {
+  const addSkill = async () => {
+    const payload = {
       group: form.group,
       items: form.items
         .split(',')
         .map((i) => i.trim())
         .filter(Boolean),
     };
-    setSkills([...skills, newSkill]);
+    const res = await fetch('/api/skills', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const created = await res.json();
+    setSkills([...skills, created]);
     setForm({ group: '', items: '' });
   };
 
-  const deleteSkill = (index: number) => {
-    setSkills(skills.filter((_, i) => i !== index));
+  const deleteSkill = async (id: string) => {
+    await fetch('/api/skills', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    setSkills(skills.filter((s) => s.id !== id));
   };
 
   return (
@@ -68,14 +75,14 @@ export default function SkillsSection() {
         </button>
       </div>
       <ul className="space-y-2">
-        {skills.map((s, idx) => (
+        {skills.map((s) => (
           <li
-            key={idx}
+            key={s.id}
             className="flex justify-between items-center p-2 rounded-md bg-white/60 dark:bg-gray-800/60 backdrop-blur"
           >
             <span className="font-semibold">{s.group}</span>
             <button
-              onClick={() => deleteSkill(idx)}
+              onClick={() => deleteSkill(s.id)}
               className="text-red-500 text-sm"
             >
               Delete
