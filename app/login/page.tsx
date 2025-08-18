@@ -1,24 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import FadeInSection from '../../components/FadeInSection';
+import { useAuth } from '../../components/AuthProvider';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+  const { login } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await signIn('credentials', { redirect: false, email, password });
-    if (res?.error) {
-      setError('Invalid credentials');
-    } else {
+    if (login(email, password)) {
       router.push('/');
+    } else {
+      setError('Invalid credentials');
     }
   };
 
@@ -47,7 +47,7 @@ export default function LoginPage() {
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg font-semibold shadow-md hover:from-blue-600 hover:to-purple-700 transition-colors"
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg font-semibold shadow-md hover:from-blue-600 hover:to-purple-700 transition-colors transition-transform hover:scale-105"
             >
               Login
             </button>
