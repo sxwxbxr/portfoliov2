@@ -12,6 +12,7 @@ interface ProjectForm {
 }
 
 interface StoredProject {
+  id: string;
   title: string;
   summary: string;
   tags: string[];
@@ -32,31 +33,37 @@ export default function ProjectsSection() {
   });
 
   useEffect(() => {
-    const stored = localStorage.getItem('projects');
-    if (stored) {
-      setProjects(JSON.parse(stored));
-    }
+    fetch('/api/projects')
+      .then((res) => res.json())
+      .then((data) => setProjects(data));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('projects', JSON.stringify(projects));
-  }, [projects]);
-
-  const addProject = () => {
-    const newProject: StoredProject = {
+  const addProject = async () => {
+    const payload = {
       title: form.title,
       summary: form.summary,
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
       cover: form.cover,
+      live: form.live || undefined,
+      repo: form.repo || undefined,
     };
-    if (form.live) newProject.live = form.live;
-    if (form.repo) newProject.repo = form.repo;
-    setProjects([...projects, newProject]);
+    const res = await fetch('/api/projects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const created = await res.json();
+    setProjects([...projects, created]);
     setForm({ title: '', summary: '', tags: '', cover: '', live: '', repo: '' });
   };
 
-  const deleteProject = (index: number) => {
-    setProjects(projects.filter((_, i) => i !== index));
+  const deleteProject = async (id: string) => {
+    await fetch('/api/projects', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    setProjects(projects.filter((p) => p.id !== id));
   };
 
   return (
@@ -111,14 +118,14 @@ export default function ProjectsSection() {
         </button>
       </div>
       <ul className="space-y-2">
-        {projects.map((p, idx) => (
+        {projects.map((p) => (
           <li
-            key={idx}
+            key={p.id}
             className="flex justify-between items-center p-2 rounded-md bg-white/60 dark:bg-gray-800/60 backdrop-blur"
           >
             <span className="font-semibold">{p.title}</span>
             <button
-              onClick={() => deleteProject(idx)}
+              onClick={() => deleteProject(p.id)}
               className="text-red-500 text-sm"
             >
               Delete

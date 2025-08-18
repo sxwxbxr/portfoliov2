@@ -12,6 +12,7 @@ interface ExperienceForm {
 }
 
 interface StoredExperience {
+  id: string;
   role: string;
   company: string;
   start: string;
@@ -32,18 +33,13 @@ export default function ExperiencesSection() {
   });
 
   useEffect(() => {
-    const stored = localStorage.getItem('experiences');
-    if (stored) {
-      setExperiences(JSON.parse(stored));
-    }
+    fetch('/api/experiences')
+      .then((res) => res.json())
+      .then((data) => setExperiences(data));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('experiences', JSON.stringify(experiences));
-  }, [experiences]);
-
-  const addExperience = () => {
-    const newExp: StoredExperience = {
+  const addExperience = async () => {
+    const payload = {
       role: form.role,
       company: form.company,
       start: form.start,
@@ -54,12 +50,23 @@ export default function ExperiencesSection() {
         .map((h) => h.trim())
         .filter(Boolean),
     };
-    setExperiences([...experiences, newExp]);
+    const res = await fetch('/api/experiences', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const created = await res.json();
+    setExperiences([...experiences, created]);
     setForm({ role: '', company: '', start: '', end: '', summary: '', highlights: '' });
   };
 
-  const deleteExperience = (index: number) => {
-    setExperiences(experiences.filter((_, i) => i !== index));
+  const deleteExperience = async (id: string) => {
+    await fetch('/api/experiences', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    setExperiences(experiences.filter((e) => e.id !== id));
   };
 
   return (
@@ -116,14 +123,14 @@ export default function ExperiencesSection() {
         </button>
       </div>
       <ul className="space-y-2">
-        {experiences.map((e, idx) => (
+        {experiences.map((e) => (
           <li
-            key={idx}
+            key={e.id}
             className="flex justify-between items-center p-2 rounded-md bg-white/60 dark:bg-gray-800/60 backdrop-blur"
           >
             <span className="font-semibold">{e.role} – {e.company}</span>
             <button
-              onClick={() => deleteExperience(idx)}
+              onClick={() => deleteExperience(e.id)}
               className="text-red-500 text-sm"
             >
               Delete

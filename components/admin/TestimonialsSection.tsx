@@ -8,6 +8,7 @@ interface TestimonialForm {
 }
 
 interface TestimonialEntry {
+  id: string;
   author: string;
   quote: string;
 }
@@ -17,21 +18,29 @@ export default function TestimonialsSection() {
   const [form, setForm] = useState<TestimonialForm>({ author: '', quote: '' });
 
   useEffect(() => {
-    const stored = localStorage.getItem('testimonials');
-    if (stored) setTestimonials(JSON.parse(stored));
+    fetch('/api/testimonials')
+      .then((res) => res.json())
+      .then((data) => setTestimonials(data));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('testimonials', JSON.stringify(testimonials));
-  }, [testimonials]);
-
-  const addTestimonial = () => {
-    setTestimonials([...testimonials, { ...form }]);
+  const addTestimonial = async () => {
+    const res = await fetch('/api/testimonials', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+    const created = await res.json();
+    setTestimonials([...testimonials, created]);
     setForm({ author: '', quote: '' });
   };
 
-  const deleteTestimonial = (index: number) => {
-    setTestimonials(testimonials.filter((_, i) => i !== index));
+  const deleteTestimonial = async (id: string) => {
+    await fetch('/api/testimonials', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    setTestimonials(testimonials.filter((t) => t.id !== id));
   };
 
   return (
@@ -58,14 +67,14 @@ export default function TestimonialsSection() {
         </button>
       </div>
       <ul className="space-y-2">
-        {testimonials.map((t, idx) => (
+        {testimonials.map((t) => (
           <li
-            key={idx}
+            key={t.id}
             className="flex justify-between items-center p-2 rounded-md bg-white/60 dark:bg-gray-800/60 backdrop-blur"
           >
             <span className="font-semibold">{t.author}</span>
             <button
-              onClick={() => deleteTestimonial(idx)}
+              onClick={() => deleteTestimonial(t.id)}
               className="text-red-500 text-sm"
             >
               Delete

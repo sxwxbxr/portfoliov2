@@ -10,6 +10,7 @@ interface EducationForm {
 }
 
 interface EducationEntry {
+  id: string;
   school: string;
   degree: string;
   start: string;
@@ -26,21 +27,29 @@ export default function EducationSection() {
   });
 
   useEffect(() => {
-    const stored = localStorage.getItem('education');
-    if (stored) setEducation(JSON.parse(stored));
+    fetch('/api/education')
+      .then((res) => res.json())
+      .then((data) => setEducation(data));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('education', JSON.stringify(education));
-  }, [education]);
-
-  const addEducation = () => {
-    setEducation([...education, { ...form }]);
+  const addEducation = async () => {
+    const res = await fetch('/api/education', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+    const created = await res.json();
+    setEducation([...education, created]);
     setForm({ school: '', degree: '', start: '', end: '' });
   };
 
-  const deleteEducation = (index: number) => {
-    setEducation(education.filter((_, i) => i !== index));
+  const deleteEducation = async (id: string) => {
+    await fetch('/api/education', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    setEducation(education.filter((e) => e.id !== id));
   };
 
   return (
@@ -82,14 +91,14 @@ export default function EducationSection() {
         </button>
       </div>
       <ul className="space-y-2">
-        {education.map((ed, idx) => (
+        {education.map((ed) => (
           <li
-            key={idx}
+            key={ed.id}
             className="flex justify-between items-center p-2 rounded-md bg-white/60 dark:bg-gray-800/60 backdrop-blur"
           >
             <span className="font-semibold">{ed.degree} @ {ed.school}</span>
             <button
-              onClick={() => deleteEducation(idx)}
+              onClick={() => deleteEducation(ed.id)}
               className="text-red-500 text-sm"
             >
               Delete
