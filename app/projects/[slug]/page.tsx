@@ -47,20 +47,26 @@ export default function ProjectPage() {
             </div>
           ))}
         </div>
-        <div className="flex space-x-4 mt-8">
-          <a
-            href={project.liveUrl}
-            className="text-blue-600 dark:text-blue-400 hover:underline text-sm transition-transform hover:scale-105"
-          >
-            Live
-          </a>
-          <a
-            href={project.repoUrl}
-            className="text-blue-600 dark:text-blue-400 hover:underline text-sm transition-transform hover:scale-105"
-          >
-            Repo
-          </a>
-        </div>
+        {(project.liveUrl || project.repoUrl) && (
+          <div className="flex space-x-4 mt-8">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                className="text-blue-600 dark:text-blue-400 hover:underline text-sm transition-transform hover:scale-105"
+              >
+                Live
+              </a>
+            )}
+            {project.repoUrl && (
+              <a
+                href={project.repoUrl}
+                className="text-blue-600 dark:text-blue-400 hover:underline text-sm transition-transform hover:scale-105"
+              >
+                Repo
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </FadeInSection>
   );

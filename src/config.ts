@@ -27,8 +27,8 @@ export interface Project {
   result: string;
   lessons: string;
   metrics: Metric[];
-  liveUrl: string;
-  repoUrl: string;
+  liveUrl?: string;
+  repoUrl?: string;
 }
 
 export interface Idea {

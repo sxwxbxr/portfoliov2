@@ -90,6 +90,8 @@ export default function Home() {
                 title={project.title}
                 description={project.description}
                 slug={project.slug}
+                liveUrl={project.liveUrl}
+                repoUrl={project.repoUrl}
               />
             ))}
           </div>

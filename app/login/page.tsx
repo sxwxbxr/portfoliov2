@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import FadeInSection from '../../components/FadeInSection';
 import { useAuth } from '../../components/AuthProvider';
 
@@ -12,6 +11,22 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const router = useRouter();
   const { login } = useAuth();
+
+  useEffect(() => {
+    const stored = localStorage.getItem('users');
+    if (!stored) {
+      localStorage.setItem(
+        'users',
+        JSON.stringify([
+          {
+            email: 'admin@example.com',
+            password: 'admin123',
+            role: 'admin',
+          },
+        ])
+      );
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,12 +67,6 @@ export default function LoginPage() {
               Login
             </button>
           </form>
-          <p className="text-sm text-center mt-4">
-            Don't have an account?{' '}
-            <Link href="/signup" className="text-blue-600 hover:underline">
-              Sign up
-            </Link>
-          </p>
         </div>
       </FadeInSection>
     </div>

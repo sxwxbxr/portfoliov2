@@ -6,7 +6,7 @@ import { navLinks } from '../src/config';
 import { useAuth } from './AuthProvider';
 
 export default function NavBar() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, isAdmin, logout } = useAuth();
   const router = useRouter();
   return (
     <nav className="bg-gradient-to-r from-white/60 to-white/20 dark:from-gray-900/60 dark:to-gray-800/20 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
@@ -30,6 +30,16 @@ export default function NavBar() {
                 className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors transition-transform hover:scale-105"
               >
                 Private Hub
+              </Link>
+            </li>
+          )}
+          {isAdmin && (
+            <li>
+              <Link
+                href="/admin"
+                className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors transition-transform hover:scale-105"
+              >
+                Admin
               </Link>
             </li>
           )}
