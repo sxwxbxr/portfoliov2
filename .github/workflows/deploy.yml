@@ -22,7 +22,7 @@ jobs:
 
       - name: Build
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL="mysql://wi5yis_api:Nf@d?8z19p1?BT@Hwi5yis.myd.infomaniak.com:3306/wi5yis_portfolio_private" }}
+          DATABASE_URL: ${{ secrets."mysql://wi5yis_api:Nf@d?8z19p1?BT@Hwi5yis.myd.infomaniak.com:3306/wi5yis_portfolio_private" }}
         run: |
           npx prisma generate
           npm run build
