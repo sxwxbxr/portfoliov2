@@ -38,7 +38,7 @@ jobs:
 
             if [ ! -d ".git" ]; then
               echo "🚀 Erstes Deployment: Klone Repository"
-              git clone https://github.com/<DEIN_USER>/<DEIN_REPO>.git .
+              git clone https://github.com/sxwxbxr/portfoliov2.git .
             else
               echo "🔄 Repo existiert: Pull letzte Änderungen"
               git pull
