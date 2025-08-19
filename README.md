@@ -42,6 +42,7 @@ The build process creates a Node.js server that can be run on Infomaniak's Node 
 
 Static assets are stored under `public/assets` with sub‑folders for `projects`, `experience`, `testimonials` and `identity` images. Database records should reference these files using relative paths such as `/assets/projects/<slug>-cover.jpg`.
 
+
 ### CI/CD (GitHub Actions)
 
 A workflow in `.github/workflows/deploy.yml` builds the app and deploys it to your Infomaniak host via SSH. Define these repository secrets:
