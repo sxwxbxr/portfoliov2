@@ -41,3 +41,16 @@ MAIL_PASS=password
 The build process creates a Node.js server that can be run on Infomaniak's Node hosting.
 
 Static assets are stored under `public/assets` with sub‑folders for `projects`, `experience`, `testimonials` and `identity` images. Database records should reference these files using relative paths such as `/assets/projects/<slug>-cover.jpg`.
+
+
+### CI/CD (GitHub Actions)
+
+A workflow in `.github/workflows/deploy.yml` builds the app and deploys it to your Infomaniak host via SSH. Define these repository secrets:
+
+- `DATABASE_URL` – Prisma connection string used during build
+- `INFOMANIAK_HOST` – SSH host name
+- `INFOMANIAK_USER` – SSH user name
+- `INFOMANIAK_SSH_KEY` – private SSH key with access to the server
+- `INFOMANIAK_PATH` – target directory on the server (e.g. `/home/user/www/portfoliov2`)
+
+The job pulls the latest code on the server, installs production dependencies, runs database migrations and rebuilds the app. Finally it restarts the process using `pm2` (create or adjust the command if you manage the app differently).
