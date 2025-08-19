@@ -34,17 +34,31 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           script: |
+            # Stelle sicher, dass das Zielverzeichnis existiert
+            mkdir -p ${{ secrets.APP_DIR }}
             cd ${{ secrets.APP_DIR }}
 
             if [ ! -d ".git" ]; then
-              echo "🚀 Erstes Deployment: Klone Repository"
-              git clone https://github.com/sxwxbxr/portfoliov2.git .
+              if [ -z "$(ls -A .)" ]; then
+                echo "🚀 Erstes Deployment: Klone Repository"
+                git clone https://github.com/sxwxbxr/portfoliov2.git .
+              else
+                echo "⚠️ Ordner existiert, aber kein Git-Repo. Initialisiere Repo."
+                git init
+                git remote add origin https://github.com/sxwxbxr/portfoliov2.git
+                git fetch
+                git checkout main
+              fi
             else
               echo "🔄 Repo existiert: Pull letzte Änderungen"
-              git pull
+              git reset --hard
+              git pull origin main
             fi
 
+            echo "📦 Installiere Dependencies und baue Projekt"
             npm ci --omit=dev
             npx prisma migrate deploy
             npm run build
+
+            echo "🚦 Starte oder reloade App via PM2"
             pm2 reload portfolio || pm2 start npm --name portfolio -- start
