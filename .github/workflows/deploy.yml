@@ -35,7 +35,7 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           script: |
             # Stelle sicher, dass das Zielverzeichnis existiert
-            mkdir -p ${{ secrets.APP_DIR }}
+            
             cd ${{ secrets.APP_DIR }}
 
             if [ ! -d ".git" ]; then
