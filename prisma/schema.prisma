@@ -79,13 +79,13 @@ model Post {
 }
 
 model File {
-  id       Int      @id @default(autoincrement())
-  path     String
-  name     String
-  mimeType String
-  size     Int
-  createdAt DateTime @default(now())
+  id       Int     @id @default(autoincrement())
+  mimeType String  @default("unknown")
+  name     String  @default("")
+  path     String  @default("")
+  size     Int     @default(0)
 }
+
 
 model ContactMessage {
   id        Int      @id @default(autoincrement())
