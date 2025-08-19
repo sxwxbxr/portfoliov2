@@ -34,20 +34,24 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           script: |
-            cd sites/sweber.dev
+            cd ${{ secrets.APP_DIR }}
 
+            # Falls kein Repo vorhanden ist → initialisieren
             if [ ! -d ".git" ]; then
               echo "🚀 Kein Git-Repo: Initialisiere"
               rm -f index.html
-              git init
+              git init --initial-branch=main
               git remote add origin https://github.com/sxwxbxr/portfoliov2.git
-              git fetch
-              git checkout -t origin/main
+              git fetch origin main
+              git checkout main
             else
               echo "🔄 Repo existiert: Update"
               git reset --hard
               git pull origin main
             fi
+
+            # Geschützte Dateien wiederherstellen (niemals überschreiben lassen)
+            git checkout main -- . ':!.htaccess' ':!.user.ini' ':!.infomaniak-maintenance.html'
 
             echo "📦 Installiere Dependencies und baue Projekt"
             npm ci --omit=dev
