@@ -1,7 +1,7 @@
 -- SQL script to initialize MariaDB with portfolio data
 
-CREATE DATABASE IF NOT EXISTS portfolio;
-USE portfolio;
+CREATE DATABASE IF NOT EXISTS wi5yis_portfolio_private;
+USE wi5yis_portfolio_private;
 
 -- Table definitions
 CREATE TABLE IF NOT EXISTS Experience (
