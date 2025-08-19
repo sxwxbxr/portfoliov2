@@ -35,7 +35,15 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           script: |
             cd ${{ secrets.APP_DIR }}
-            git pull
+
+            if [ ! -d ".git" ]; then
+              echo "🚀 Erstes Deployment: Klone Repository"
+              git clone https://github.com/<DEIN_USER>/<DEIN_REPO>.git .
+            else
+              echo "🔄 Repo existiert: Pull letzte Änderungen"
+              git pull
+            fi
+
             npm ci --omit=dev
             npx prisma migrate deploy
             npm run build
