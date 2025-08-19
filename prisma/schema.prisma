@@ -1,0 +1,96 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  description String
+  cover       String
+  problem     String
+  approach    String
+  result      String
+  lessons     String
+  liveUrl     String?
+  repoUrl     String?
+  metrics     Metric[]
+}
+
+model Metric {
+  id        Int     @id @default(autoincrement())
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+  label     String
+  value     String
+}
+
+model Experience {
+  id         Int      @id @default(autoincrement())
+  role       String
+  company    String
+  start      DateTime
+  end        DateTime?
+  summary    String
+  highlights String
+}
+
+model Skill {
+  id    Int    @id @default(autoincrement())
+  group String
+  items String
+}
+
+model Education {
+  id     Int      @id @default(autoincrement())
+  school String
+  degree String
+  start  DateTime
+  end    DateTime
+}
+
+model Testimonial {
+  id      Int     @id @default(autoincrement())
+  quote   String
+  name    String
+  role    String
+  company String
+  avatar  String
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model File {
+  id       Int      @id @default(autoincrement())
+  path     String
+  name     String
+  mimeType String
+  size     Int
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}

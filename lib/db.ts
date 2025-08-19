@@ -1,10 +1,14 @@
-import Database from 'better-sqlite3';
-import path from 'path';
-import { initDB } from './schema';
+import { PrismaClient } from '@prisma/client';
 
-const dbPath = path.join(process.cwd(), 'data', 'portfolio.db');
-const db = new Database(dbPath);
+// Avoid instantiating multiple Prisma Clients in development
+const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 
-initDB(db);
+export const prisma =
+  globalForPrisma.prisma ||
+  new PrismaClient();
 
-export default db;
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma;
+}
+
+export default prisma;
