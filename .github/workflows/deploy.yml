@@ -22,7 +22,7 @@ jobs:
 
       - name: Build
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL="mysql://wi5yis_api:Nf@d?8z19p1?BT@Hwi5yis.myd.infomaniak.com:3306/wi5yis_portfolio_private" }}
         run: |
           npx prisma generate
           npm run build
@@ -30,11 +30,11 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.2
         with:
-          host: ${{ secrets.INFOMANIAK_HOST }}
-          username: ${{ secrets.INFOMANIAK_USER }}
-          key: ${{ secrets.INFOMANIAK_SSH_KEY }}
+          host: ${{ secrets.57-102255.ssh.hosting-ik.com }}
+          username: ${{ secrets.wi5yis_system }}
+          key: ${{ secrets.3.hx8a$Y$I1%L }}
           script: |
-            cd ${{ secrets.INFOMANIAK_PATH }}
+            cd ${{ secrets./home/clients/2be23cc37c8cf3cf812bea7c869da00b/sites/sweber.dev }}
             git pull
             npm ci --omit=dev
             npx prisma migrate deploy
