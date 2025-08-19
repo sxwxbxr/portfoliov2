@@ -34,5 +34,5 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           protocol: ftps
-          local-dir: ./out
+          local-dir: ./out/
           server-dir: /sites/sweber.dev/
