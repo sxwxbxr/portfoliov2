@@ -7,10 +7,24 @@ export default function ContactPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [status, setStatus] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // placeholder submit
+    setStatus('');
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message }),
+    });
+    if (res.ok) {
+      setName('');
+      setEmail('');
+      setMessage('');
+      setStatus('Message sent!');
+    } else {
+      setStatus('Something went wrong.');
+    }
   };
 
   return (
@@ -47,6 +61,7 @@ export default function ContactPage() {
           >
             Send
           </button>
+          {status && <p className="text-center text-sm mt-2">{status}</p>}
         </form>
       </FadeInSection>
     </div>

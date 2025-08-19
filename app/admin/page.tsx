@@ -10,12 +10,19 @@ import SkillsSection from '../../components/admin/SkillsSection';
 import EducationSection from '../../components/admin/EducationSection';
 import TestimonialsSection from '../../components/admin/TestimonialsSection';
 import UsersSection from '../../components/admin/UsersSection';
+import ContactMessagesSection from '../../components/admin/ContactMessagesSection';
 
 export default function AdminPage() {
   const { isAuthenticated, isAdmin } = useAuth();
   const router = useRouter();
   const [tab, setTab] = useState<
-    'projects' | 'experiences' | 'skills' | 'education' | 'testimonials' | 'users'
+    | 'projects'
+    | 'experiences'
+    | 'skills'
+    | 'education'
+    | 'testimonials'
+    | 'users'
+    | 'messages'
   >('projects');
 
   useEffect(() => {
@@ -66,6 +73,12 @@ export default function AdminPage() {
           >
             Users
           </button>
+          <button
+            onClick={() => setTab('messages')}
+            className={`px-4 py-2 rounded-md border ${tab === 'messages' ? 'bg-blue-500 text-white' : 'bg-white/60 dark:bg-gray-800/60'}`}
+          >
+            Contact Messages
+          </button>
         </div>
         <div className="p-6 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur shadow">
           {tab === 'projects' && <ProjectsSection />}
@@ -74,6 +87,7 @@ export default function AdminPage() {
           {tab === 'education' && <EducationSection />}
           {tab === 'testimonials' && <TestimonialsSection />}
           {tab === 'users' && <UsersSection />}
+          {tab === 'messages' && <ContactMessagesSection />}
         </div>
       </div>
     </FadeInSection>
