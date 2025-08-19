@@ -1,11 +1,15 @@
-"use client";
-
 import FadeInSection from '../../../components/FadeInSection';
 import { projects } from '../../../src/config';
-import { useParams } from 'next/navigation';
 
-export default function ProjectPage() {
-  const params = useParams<{ slug: string }>();
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.slug }));
+}
+
+export default function ProjectPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const project = projects.find((p) => p.slug === params.slug);
   if (!project) {
     return <div className="max-w-5xl mx-auto py-20">Project not found.</div>;
