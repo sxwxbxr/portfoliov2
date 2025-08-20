@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchWithTimeout } from '../../lib/fetchWithTimeout';
 
 interface EducationForm {
   school: string;
@@ -27,13 +28,13 @@ export default function EducationSection() {
   });
 
   useEffect(() => {
-    fetch('/api/education')
+    fetchWithTimeout('/api/education', 10000)
       .then((res) => res.json())
       .then((data) => setEducation(data));
   }, []);
 
   const addEducation = async () => {
-    const res = await fetch('/api/education', {
+    const res = await fetchWithTimeout('/api/education', 10000, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
@@ -44,7 +45,7 @@ export default function EducationSection() {
   };
 
   const deleteEducation = async (id: string) => {
-    await fetch('/api/education', {
+    await fetchWithTimeout('/api/education', 10000, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),

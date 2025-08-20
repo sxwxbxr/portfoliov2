@@ -4,6 +4,10 @@ A simple, modern portfolio for a software developer built with Next.js and Tailw
 
 The home page showcases experience, projects, education, skills, and contact details with subtle scroll-triggered animations.
 
+## Requirements
+
+- Node.js 18.17.0 or newer (20.x LTS recommended)
+
 ## Development
 
 - `npm ci` – install dependencies

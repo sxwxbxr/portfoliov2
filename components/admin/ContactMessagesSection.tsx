@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchWithTimeout } from '../../lib/fetchWithTimeout';
 
 interface ContactMessage {
   id: number;
@@ -14,17 +15,21 @@ export default function ContactMessagesSection() {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
 
   useEffect(() => {
-    fetch('/api/contact')
+    fetchWithTimeout('/api/contact', 10000)
       .then((res) => res.json())
       .then(setMessages);
   }, []);
 
   const deleteMessage = async (id: number) => {
-    await fetch('/api/contact', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
-    });
+    await fetchWithTimeout(
+      '/api/contact',
+      10000,
+      {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      }
+    );
     setMessages(messages.filter((m) => m.id !== id));
   };
 
