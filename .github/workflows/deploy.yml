@@ -34,11 +34,13 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           script: |
+            set -e
+
             cd ${{ secrets.APP_DIR }}
 
             if [ ! -d ".git" ]; then
               echo "🚀 Kein Git-Repo: Initialisiere frisch"
-              rm -rf * .[^.]*   # löscht alles außer . und ..
+              rm -rf * .[^.]* || true
               git clone https://github.com/sxwxbxr/portfoliov2.git .
             else
               echo "🔄 Repo existiert: Aktualisiere Repo"
@@ -49,10 +51,19 @@ jobs:
             # Geschützte Dateien NICHT überschreiben
             git checkout main -- . ':!.htaccess' ':!.user.ini' ':!.infomaniak-maintenance.html'
 
-            echo "📦 Installiere Dependencies und baue Projekt"
+            echo "📦 Installiere Dependencies"
             npm ci --omit=dev
+
+            echo "🗄 Prisma Migration"
             npx prisma migrate deploy
+
+            echo "🏗 Baue Projekt"
             npm run build
+
+            echo "⚙️ Installiere PM2 falls nicht vorhanden"
+            if ! command -v pm2 >/dev/null 2>&1; then
+              npm install -g pm2
+            fi
 
             echo "🚦 Starte oder reloade App via PM2"
             pm2 reload portfolio || pm2 start npm --name portfolio -- start
