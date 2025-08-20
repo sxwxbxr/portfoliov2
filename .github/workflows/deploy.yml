@@ -41,9 +41,9 @@ jobs:
               rm -rf * .[^.]*   # löscht alles außer . und ..
               git clone https://github.com/sxwxbxr/portfoliov2.git .
             else
-              echo "🔄 Repo existiert: Pull letzte Änderungen"
-              git reset --hard
-              git pull origin main || (echo "⚠️ Pull fehlgeschlagen – frisch klonen" && rm -rf .git && git clone https://github.com/sxwxbxr/portfoliov2.git .)
+              echo "🔄 Repo existiert: Aktualisiere Repo"
+              git fetch --all
+              git reset --hard origin/main
             fi
 
             # Geschützte Dateien NICHT überschreiben
