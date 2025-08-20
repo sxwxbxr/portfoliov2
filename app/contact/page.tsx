@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import FadeInSection from '../../components/FadeInSection';
+import { fetchWithTimeout } from '../../lib/fetchWithTimeout';
 
 export default function ContactPage() {
   const [name, setName] = useState('');
@@ -12,11 +13,15 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('');
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, message }),
-    });
+    const res = await fetchWithTimeout(
+      '/api/contact',
+      10000,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      }
+    );
     if (res.ok) {
       setName('');
       setEmail('');

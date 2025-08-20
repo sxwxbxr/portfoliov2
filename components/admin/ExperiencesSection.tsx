@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchWithTimeout } from '../../lib/fetchWithTimeout';
 
 interface ExperienceForm {
   role: string;
@@ -33,7 +34,7 @@ export default function ExperiencesSection() {
   });
 
   useEffect(() => {
-    fetch('/api/experiences')
+    fetchWithTimeout('/api/experiences', 10000)
       .then((res) => res.json())
       .then((data) => setExperiences(data));
   }, []);
@@ -50,7 +51,7 @@ export default function ExperiencesSection() {
         .map((h) => h.trim())
         .filter(Boolean),
     };
-    const res = await fetch('/api/experiences', {
+    const res = await fetchWithTimeout('/api/experiences', 10000, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -61,7 +62,7 @@ export default function ExperiencesSection() {
   };
 
   const deleteExperience = async (id: string) => {
-    await fetch('/api/experiences', {
+    await fetchWithTimeout('/api/experiences', 10000, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
