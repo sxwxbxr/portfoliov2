@@ -10,7 +10,6 @@ The home page showcases experience, projects, education, skills, and contact det
 - Node.js 18.17.x or 20.x (see `.nvmrc`)
 - Newer majors such as 22.x or 24.x are not yet supported by Next.js and may cause installs or builds to hang.
 
-
 ## Development
 
 - `npm ci` – install dependencies
