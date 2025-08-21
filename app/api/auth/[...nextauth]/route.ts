@@ -3,6 +3,11 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { findUser } from '../../../../lib/users';
 
+const secret = process.env.NEXTAUTH_SECRET;
+if (!secret) {
+  throw new Error('NEXTAUTH_SECRET is not set');
+}
+
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -22,7 +27,7 @@ const handler = NextAuth({
     }),
   ],
   session: { strategy: 'jwt' },
-  secret: process.env.NEXTAUTH_SECRET || 'secret',
+  secret,
 });
 
 export { handler as GET, handler as POST };
