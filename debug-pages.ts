@@ -13,7 +13,9 @@ async function exists(p: string) {
   }
 }
 
+
 async function collectModules(root: string): Promise<string[]> {
+
   const files: string[] = []
   async function walk(dir: string) {
     const entries = await fs.readdir(dir, { withFileTypes: true })
@@ -21,7 +23,9 @@ async function collectModules(root: string): Promise<string[]> {
       const full = path.join(dir, entry.name)
       if (entry.isDirectory()) {
         await walk(full)
+
       } else if (/\.(t|j)sx?$/.test(entry.name)) {
+
         files.push(full)
       }
     }
@@ -32,7 +36,9 @@ async function collectModules(root: string): Promise<string[]> {
   return files
 }
 
+
 async function testModule(file: string) {
+
   console.log(`\n=== ${file} ===`)
   try {
     const mod = await import(pathToFileURL(path.resolve(file)).href)
@@ -58,6 +64,7 @@ async function testModule(file: string) {
 }
 
 async function main() {
+
   let modules: string[] = []
   for (const root of roots) {
     const found = await collectModules(root)
