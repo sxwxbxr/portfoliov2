@@ -1,4 +1,4 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
 import { randomUUID } from 'crypto';
 
@@ -14,32 +14,32 @@ export interface Experience {
 
 const dataFile = path.join(process.cwd(), 'data', 'experiences.json');
 
-function readExperiences(): Experience[] {
+async function readExperiences(): Promise<Experience[]> {
   try {
-    const data = fs.readFileSync(dataFile, 'utf-8');
+    const data = await fs.readFile(dataFile, 'utf-8');
     return JSON.parse(data) as Experience[];
   } catch {
     return [];
   }
 }
 
-function writeExperiences(experiences: Experience[]) {
-  fs.writeFileSync(dataFile, JSON.stringify(experiences, null, 2));
+async function writeExperiences(experiences: Experience[]) {
+  await fs.writeFile(dataFile, JSON.stringify(experiences, null, 2));
 }
 
-export function getExperiences(): Experience[] {
+export async function getExperiences(): Promise<Experience[]> {
   return readExperiences();
 }
 
-export function addExperience(exp: Omit<Experience, 'id'>): Experience {
-  const experiences = readExperiences();
+export async function addExperience(exp: Omit<Experience, 'id'>): Promise<Experience> {
+  const experiences = await readExperiences();
   const newExp: Experience = { id: randomUUID(), ...exp };
   experiences.push(newExp);
-  writeExperiences(experiences);
+  await writeExperiences(experiences);
   return newExp;
 }
 
-export function deleteExperience(id: string) {
-  const experiences = readExperiences().filter((e) => e.id !== id);
-  writeExperiences(experiences);
+export async function deleteExperience(id: string) {
+  const experiences = (await readExperiences()).filter((e) => e.id !== id);
+  await writeExperiences(experiences);
 }
