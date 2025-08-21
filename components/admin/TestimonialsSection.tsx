@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchWithTimeout } from '../../lib/fetchWithTimeout';
 
 interface TestimonialForm {
   author: string;
@@ -18,13 +19,13 @@ export default function TestimonialsSection() {
   const [form, setForm] = useState<TestimonialForm>({ author: '', quote: '' });
 
   useEffect(() => {
-    fetch('/api/testimonials')
+    fetchWithTimeout('/api/testimonials', 10000)
       .then((res) => res.json())
       .then((data) => setTestimonials(data));
   }, []);
 
   const addTestimonial = async () => {
-    const res = await fetch('/api/testimonials', {
+    const res = await fetchWithTimeout('/api/testimonials', 10000, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
@@ -35,7 +36,7 @@ export default function TestimonialsSection() {
   };
 
   const deleteTestimonial = async (id: string) => {
-    await fetch('/api/testimonials', {
+    await fetchWithTimeout('/api/testimonials', 10000, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),

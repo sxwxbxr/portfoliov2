@@ -1,4 +1,4 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
 import { randomUUID } from 'crypto';
 
@@ -10,32 +10,32 @@ export interface Skill {
 
 const dataFile = path.join(process.cwd(), 'data', 'skills.json');
 
-function readSkills(): Skill[] {
+async function readSkills(): Promise<Skill[]> {
   try {
-    const data = fs.readFileSync(dataFile, 'utf-8');
+    const data = await fs.readFile(dataFile, 'utf-8');
     return JSON.parse(data) as Skill[];
   } catch {
     return [];
   }
 }
 
-function writeSkills(skills: Skill[]) {
-  fs.writeFileSync(dataFile, JSON.stringify(skills, null, 2));
+async function writeSkills(skills: Skill[]) {
+  await fs.writeFile(dataFile, JSON.stringify(skills, null, 2));
 }
 
-export function getSkills(): Skill[] {
+export async function getSkills(): Promise<Skill[]> {
   return readSkills();
 }
 
-export function addSkill(skill: Omit<Skill, 'id'>): Skill {
-  const skills = readSkills();
+export async function addSkill(skill: Omit<Skill, 'id'>): Promise<Skill> {
+  const skills = await readSkills();
   const newSkill: Skill = { id: randomUUID(), ...skill };
   skills.push(newSkill);
-  writeSkills(skills);
+  await writeSkills(skills);
   return newSkill;
 }
 
-export function deleteSkill(id: string) {
-  const skills = readSkills().filter((s) => s.id !== id);
-  writeSkills(skills);
+export async function deleteSkill(id: string) {
+  const skills = (await readSkills()).filter((s) => s.id !== id);
+  await writeSkills(skills);
 }

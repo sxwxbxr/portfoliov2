@@ -4,6 +4,11 @@ A simple, modern portfolio for a software developer built with Next.js and Tailw
 
 The home page showcases experience, projects, education, skills, and contact details with subtle scroll-triggered animations.
 
+## Requirements
+
+- Node.js 18.17.x or 20.x (see `.nvmrc`)
+- Newer majors such as 22.x or 24.x are not yet supported by Next.js and may cause installs or builds to hang.
+
 ## Development
 
 - `npm ci` – install dependencies
@@ -16,10 +21,11 @@ The project structure is intentionally minimal and easy to expand with additiona
 
 ## MariaDB & Deployment (Infomaniak)
 
-This project uses Prisma to connect to a MariaDB database. Configure the connection string in `.env.production`:
+This project uses Prisma to connect to a MariaDB database. Copy `.env.example` to `.env` and set the required variables:
 
 ```
 DATABASE_URL="mysql://<USER>:<PASS>@<HOST>:<PORT>/<DBNAME>"
+NEXTAUTH_SECRET="your-secret"
 ```
 
 For email support via the contact form, optionally provide SMTP credentials:

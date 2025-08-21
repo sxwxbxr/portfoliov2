@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchWithTimeout } from '../../lib/fetchWithTimeout';
 
 interface ProjectForm {
   title: string;
@@ -33,7 +34,7 @@ export default function ProjectsSection() {
   });
 
   useEffect(() => {
-    fetch('/api/projects')
+    fetchWithTimeout('/api/projects', 10000)
       .then((res) => res.json())
       .then((data) => setProjects(data));
   }, []);
@@ -47,7 +48,7 @@ export default function ProjectsSection() {
       live: form.live || undefined,
       repo: form.repo || undefined,
     };
-    const res = await fetch('/api/projects', {
+    const res = await fetchWithTimeout('/api/projects', 10000, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -58,7 +59,7 @@ export default function ProjectsSection() {
   };
 
   const deleteProject = async (id: string) => {
-    await fetch('/api/projects', {
+    await fetchWithTimeout('/api/projects', 10000, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),

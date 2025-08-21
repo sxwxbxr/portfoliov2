@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchWithTimeout } from '../../lib/fetchWithTimeout';
 
 interface SkillForm {
   group: string;
@@ -18,7 +19,7 @@ export default function SkillsSection() {
   const [form, setForm] = useState<SkillForm>({ group: '', items: '' });
 
   useEffect(() => {
-    fetch('/api/skills')
+    fetchWithTimeout('/api/skills', 10000)
       .then((res) => res.json())
       .then((data) => setSkills(data));
   }, []);
@@ -31,7 +32,7 @@ export default function SkillsSection() {
         .map((i) => i.trim())
         .filter(Boolean),
     };
-    const res = await fetch('/api/skills', {
+    const res = await fetchWithTimeout('/api/skills', 10000, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -42,7 +43,7 @@ export default function SkillsSection() {
   };
 
   const deleteSkill = async (id: string) => {
-    await fetch('/api/skills', {
+    await fetchWithTimeout('/api/skills', 10000, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
