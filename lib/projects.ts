@@ -1,4 +1,4 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
 import { randomUUID } from 'crypto';
 
@@ -14,32 +14,32 @@ export interface Project {
 
 const dataFile = path.join(process.cwd(), 'data', 'projects.json');
 
-function readProjects(): Project[] {
+async function readProjects(): Promise<Project[]> {
   try {
-    const data = fs.readFileSync(dataFile, 'utf-8');
+    const data = await fs.readFile(dataFile, 'utf-8');
     return JSON.parse(data) as Project[];
   } catch {
     return [];
   }
 }
 
-function writeProjects(projects: Project[]) {
-  fs.writeFileSync(dataFile, JSON.stringify(projects, null, 2));
+async function writeProjects(projects: Project[]) {
+  await fs.writeFile(dataFile, JSON.stringify(projects, null, 2));
 }
 
-export function getProjects(): Project[] {
+export async function getProjects(): Promise<Project[]> {
   return readProjects();
 }
 
-export function addProject(project: Omit<Project, 'id'>): Project {
-  const projects = readProjects();
+export async function addProject(project: Omit<Project, 'id'>): Promise<Project> {
+  const projects = await readProjects();
   const newProject: Project = { id: randomUUID(), ...project };
   projects.push(newProject);
-  writeProjects(projects);
+  await writeProjects(projects);
   return newProject;
 }
 
-export function deleteProject(id: string) {
-  const projects = readProjects().filter((p) => p.id !== id);
-  writeProjects(projects);
+export async function deleteProject(id: string) {
+  const projects = (await readProjects()).filter((p) => p.id !== id);
+  await writeProjects(projects);
 }

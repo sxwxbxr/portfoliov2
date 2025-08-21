@@ -1,4 +1,4 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
 import { randomUUID } from 'crypto';
 
@@ -12,32 +12,32 @@ export interface Education {
 
 const dataFile = path.join(process.cwd(), 'data', 'education.json');
 
-function readEducation(): Education[] {
+async function readEducation(): Promise<Education[]> {
   try {
-    const data = fs.readFileSync(dataFile, 'utf-8');
+    const data = await fs.readFile(dataFile, 'utf-8');
     return JSON.parse(data) as Education[];
   } catch {
     return [];
   }
 }
 
-function writeEducation(education: Education[]) {
-  fs.writeFileSync(dataFile, JSON.stringify(education, null, 2));
+async function writeEducation(education: Education[]) {
+  await fs.writeFile(dataFile, JSON.stringify(education, null, 2));
 }
 
-export function getEducation(): Education[] {
+export async function getEducation(): Promise<Education[]> {
   return readEducation();
 }
 
-export function addEducation(entry: Omit<Education, 'id'>): Education {
-  const education = readEducation();
+export async function addEducation(entry: Omit<Education, 'id'>): Promise<Education> {
+  const education = await readEducation();
   const newEntry: Education = { id: randomUUID(), ...entry };
   education.push(newEntry);
-  writeEducation(education);
+  await writeEducation(education);
   return newEntry;
 }
 
-export function deleteEducation(id: string) {
-  const education = readEducation().filter((e) => e.id !== id);
-  writeEducation(education);
+export async function deleteEducation(id: string) {
+  const education = (await readEducation()).filter((e) => e.id !== id);
+  await writeEducation(education);
 }
