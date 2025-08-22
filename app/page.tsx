@@ -1,168 +1,130 @@
-"use client";
+"use client"
 
-import ProjectCard from '../components/ProjectCard';
-import FadeInSection from '../components/FadeInSection';
-import TestimonialCard from '../components/TestimonialCard';
-import { projects, testimonials, toggles } from '../src/config';
+import Link from "next/link"
+import Navigation from "../components/Navigation"
+import FadeInSection from "../components/FadeInSection"
+import { ParticleBackground } from "../components/ParticleBackground"
+import { AnimatedCounter } from "../components/AnimatedCounter"
+import { InteractiveCard } from "../components/InteractiveCard"
+import { ArrowDown, MapPin, ArrowRight, Users, Award, Calendar } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="space-y-24">
-      <FadeInSection>
-        <section className="text-center py-20">
-          <h1 className="text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-            Hi, I'm Seya Weber
-          </h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-            Project Manager Software and Digitalisation in St. Gallen, Switzerland.
-          </p>
-        </section>
-      </FadeInSection>
+    <div className="min-h-screen bg-background">
+      <Navigation />
 
-      <FadeInSection>
-        <section
-          id="about"
-          className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6"
-        >
-          <img
-            src="https://placehold.co/300x300?text=Profile"
-            alt="Profile"
-            className="w-32 h-32 rounded-full object-cover"
-          />
-          <div>
-            <h2 className="text-3xl font-semibold">About Me</h2>
-            <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
-              I’m a Software & Digitalization Project Lead at Telsonic, creating customer specific automation workflows in business-critical systems.
-            </p>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-              With a dual background in software engineering and electrical design, I turn complex operational needs into clear requirements, lean processes, and maintainable solutions.
-            </p>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-              I’m passionate about leveraging technology to drive efficiency and improve user experiences.
-            </p>
-          </div>
-        </section>
-      </FadeInSection>
-
-      <FadeInSection>
-        <section id="experience" className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-semibold mb-8 text-center">Experience</h2>
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-xl font-semibold">Project Manger Software and Digitalisation · Telsonic Ultrasonics</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">07/2025 – Present</p>
-              <ul className="list-disc list-inside mt-2 text-sm text-gray-600 dark:text-gray-300">
-                <li>Creating customer specific workflows.</li>
-              <li>Implementing company intern software projects to increase efficiency.</li>
-              <li>Adjusting post-setup automation workflows for customers</li>
-              <li>The link between customer and software, to ensure smooth communication and project success.</li>
-            </ul>
-          </div>
-            <div>
-              <h3 className="text-xl font-semibold">Software Developer Apprentice · InnoForce EST</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">08/2022 – 07/2024</p>
-              <ul className="list-disc list-inside mt-2 text-sm text-gray-600 dark:text-gray-300">
-                <li>.NET development and third-party module integration</li>
-              <li>Implemented test automation templates</li>
-              <li>Synchronized medical data across multiple locations</li>
-              <li>Evaluated medical databases in France</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold">Electrical Planner · Lepcon GmbH</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300">06/2021 – 08/2022</p>
-            <ul className="list-disc list-inside mt-2 text-sm text-gray-600 dark:text-gray-300">
-              <li>Managed electrotechnical planning and procurement</li>
-              <li>Coordinated electrical revisions of 150+ sites</li>
-            </ul>
-          </div>
-          </div>
-        </section>
-      </FadeInSection>
-
-      <FadeInSection>
-        <section id="projects" className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-semibold mb-8 text-center">Projects</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.slug}
-                title={project.title}
-                description={project.description}
-                slug={project.slug}
-                liveUrl={project.liveUrl}
-                repoUrl={project.repoUrl}
-              />
-            ))}
-          </div>
-        </section>
-      </FadeInSection>
-
-      <FadeInSection>
-        <section id="education" className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-semibold mb-8 text-center">Education</h2>
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold">Berufsmatura TALS</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">08/2024 – 07/2025</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold">
-                EFZ in Computer Science, Application Development – WISS St. Gallen
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">08/2022 – 07/2024</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold">
-                EFZ in Electrical Planning – GBS St. Gallen
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">08/2018 – 07/2022</p>
-            </div>
-          </div>
-        </section>
-      </FadeInSection>
-
-      <FadeInSection>
-        <section id="skills" className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-semibold mb-8 text-center">Skills</h2>
-          <div className="space-y-6 text-sm text-gray-600 dark:text-gray-300">
-            <div>
-              <h3 className="font-semibold">Programming Languages</h3>
-              <p>C#, Java, JavaScript, Python</p>
-            </div>
-            <div>
-              <h3 className="font-semibold">Frameworks & Tools</h3>
-              <p>.NET 8, WPF, Android Studio, PySide6, QtWebEngine</p>
-            </div>
-            <div>
-              <h3 className="font-semibold">Languages</h3>
-              <p>English – C1 Advanced (Cambridge)</p>
-              <p>German – Native</p>
-            </div>
-          </div>
-        </section>
-      </FadeInSection>
-
-      {toggles.testimonials && (
+      <section className="relative min-h-screen flex items-center justify-center gradient-bg overflow-hidden pt-16">
+        <ParticleBackground />
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <FadeInSection>
-          <section id="testimonials" className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-semibold mb-8 text-center">Testimonials</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {testimonials.map((t, idx) => (
-                <TestimonialCard
-                  key={idx}
-                  quote={t.quote}
-                  name={t.name}
-                  role={t.role}
-                  company={t.company}
-                  avatar={t.avatar}
-                />
-              ))}
+          <div className="text-center space-y-8 px-4 max-w-4xl mx-auto relative z-10">
+            <div className="space-y-4">
+              <div className="inline-block p-3 rounded-full bg-primary/10 mb-6 float-animation glow-effect">
+                <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer">
+                  <span className="text-2xl font-bold text-primary">SW</span>
+                </div>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-tight animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                Hi, I'm Seya Weber
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-serif animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
+                Project Manager Software and Digitalisation in St. Gallen, Switzerland.
+              </p>
             </div>
-          </section>
-        </FadeInSection>
-      )}
-    </div>
-  );
-}
 
+            <div className="flex items-center justify-center gap-2 text-muted-foreground animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
+              <MapPin className="w-4 h-4" />
+              <span>St. Gallen, Switzerland</span>
+            </div>
+
+            <div className="flex gap-4 justify-center animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500">
+              <Link
+                href="/contact"
+                className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-105 glow-effect hover:shadow-lg hover:shadow-primary/25"
+              >
+                Get in Touch
+              </Link>
+              <Link
+                href="/projects"
+                className="px-8 py-3 border border-border rounded-lg font-medium hover:bg-card transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              >
+                View Projects
+              </Link>
+            </div>
+
+            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+              <ArrowDown className="w-6 h-6 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
+            </div>
+          </div>
+        </FadeInSection>
+      </section>
+
+      <section className="py-16 px-4 bg-card/50">
+        <div className="max-w-6xl mx-auto">
+          <FadeInSection>
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <div className="space-y-2">
+                <Users className="w-8 h-8 text-primary mx-auto mb-4" />
+                <AnimatedCounter end={50} suffix="+" />
+                <p className="text-muted-foreground">Projects Completed</p>
+              </div>
+              <div className="space-y-2">
+                <Award className="w-8 h-8 text-primary mx-auto mb-4" />
+                <AnimatedCounter end={5} suffix="+" />
+                <p className="text-muted-foreground">Years Experience</p>
+              </div>
+              <div className="space-y-2">
+                <Calendar className="w-8 h-8 text-primary mx-auto mb-4" />
+                <AnimatedCounter end={100} suffix="%" />
+                <p className="text-muted-foreground">Client Satisfaction</p>
+              </div>
+            </div>
+          </FadeInSection>
+        </div>
+      </section>
+
+      <section className="py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <FadeInSection>
+            <div className="grid md:grid-cols-3 gap-8">
+              <InteractiveCard>
+                <Link
+                  href="/about"
+                  className="group bg-card border border-border rounded-xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 block"
+                >
+                  <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors">About Me</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Learn more about my background and passion for technology.
+                  </p>
+                  <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-2 transition-transform duration-300" />
+                </Link>
+              </InteractiveCard>
+
+              <InteractiveCard>
+                <Link
+                  href="/experience"
+                  className="group bg-card border border-border rounded-xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 block"
+                >
+                  <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors">Experience</h3>
+                  <p className="text-muted-foreground mb-4">Explore my professional journey and key achievements.</p>
+                  <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-2 transition-transform duration-300" />
+                </Link>
+              </InteractiveCard>
+
+              <InteractiveCard>
+                <Link
+                  href="/projects"
+                  className="group bg-card border border-border rounded-xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 block"
+                >
+                  <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors">Projects</h3>
+                  <p className="text-muted-foreground mb-4">Discover the projects I've worked on and their impact.</p>
+                  <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-2 transition-transform duration-300" />
+                </Link>
+              </InteractiveCard>
+            </div>
+          </FadeInSection>
+        </div>
+      </section>
+    </div>
+  )
+}
