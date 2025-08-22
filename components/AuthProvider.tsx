@@ -1,56 +1,63 @@
-'use client';
+"use client"
 
-import { ReactNode, createContext, useContext } from 'react';
-import { SessionProvider, useSession, signIn, signOut } from 'next-auth/react';
+import type React from "react"
 
-interface AuthContextValue {
-  isAuthenticated: boolean;
-  isAdmin: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
-  logout: () => Promise<void>;
+import { createContext, useContext, useEffect, useState } from "react"
+import { type User, getCurrentUser, setCurrentUser } from "../lib/auth"
+
+interface AuthContextType {
+  user: User | null
+  login: (user: User) => void
+  logout: () => void
+  isAuthenticated: boolean
+  isAdmin: boolean
 }
 
-const AuthContext = createContext<AuthContextValue>({
-  isAuthenticated: false,
-  isAdmin: false,
-  login: async () => false,
-  logout: async () => {},
-});
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-function AuthContextProvider({ children }: { children: ReactNode }) {
-  const { data: session } = useSession();
-  const isAuthenticated = !!session;
-  const isAdmin = session?.user?.role === 'admin';
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  const login = async (email: string, password: string) => {
-    const res = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    });
-    return !!res && res.ok && !res.error;
-  };
+  useEffect(() => {
+    const currentUser = getCurrentUser()
+    setUser(currentUser)
+    setIsLoading(false)
+  }, [])
 
-  const logout = async () => {
-    await signOut({ redirect: false });
-  };
+  const login = (user: User) => {
+    setUser(user)
+    setCurrentUser(user)
+  }
 
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, isAdmin, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+  const logout = () => {
+    setUser(null)
+    setCurrentUser(null)
+  }
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  return (
-    <SessionProvider>
-      <AuthContextProvider>{children}</AuthContextProvider>
-    </SessionProvider>
-  );
+  const value = {
+    user,
+    login,
+    logout,
+    isAuthenticated: !!user,
+    isAdmin: user?.role === "admin",
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext)
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider")
+  }
+  return context
 }
-
