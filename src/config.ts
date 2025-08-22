@@ -22,7 +22,7 @@ const testimonials = [
     name: "John Doe",
     role: "Senior Developer",
     company: "Tech Corp",
-    quote:
+    content:
       "Seya's technical expertise and project management skills are exceptional. He consistently delivers high-quality solutions on time.",
     avatar: "/professional-headshot.png",
   },
@@ -30,7 +30,7 @@ const testimonials = [
     name: "Jane Smith",
     role: "Product Manager",
     company: "Innovation Labs",
-    quote:
+    content:
       "Working with Seya was a pleasure. His ability to bridge technical and business requirements is outstanding.",
     avatar: "/professional-headshot.png",
   },
@@ -43,8 +43,8 @@ const projects = [
     image: "/automation-dashboard.png",
     tags: ["C#", ".NET", "Automation", "Workflow"],
     slug: "automation-workflow",
-    repoUrl: "#",
-    liveUrl: "#",
+    github: "#",
+    demo: "#",
   },
   {
     title: "Medical Data Synchronization",
@@ -52,8 +52,8 @@ const projects = [
     image: "/medical-data-dashboard.png",
     tags: ["Database", "Synchronization", "Healthcare"],
     slug: "medical-sync",
-    repoUrl: "#",
-    liveUrl: "#",
+    github: "#",
+    demo: "#",
   },
   {
     title: "Test Automation Templates",
@@ -61,8 +61,8 @@ const projects = [
     image: "/testing-automation-interface.png",
     tags: ["Testing", ".NET", "Automation", "Templates"],
     slug: "test-automation",
-    repoUrl: "#",
-    liveUrl: "#",
+    github: "#",
+    demo: "#",
   },
 ]
 
@@ -288,7 +288,7 @@ const caseStudies = [
     technologies: ["C#", ".NET Core", "SQL Server", "Azure", "REST APIs"],
     image: "/case-study-telsonic.jpg",
     testimonial: {
-      content:
+      quote:
         "The automation system transformed our operations. What used to take hours now happens in minutes, with far fewer errors.",
       author: "Manufacturing Director",
       company: "Telsonic AG",
@@ -314,7 +314,7 @@ const caseStudies = [
     technologies: ["C#", "PostgreSQL", "Redis", "Docker", "Azure Service Bus"],
     image: "/case-study-healthcare.jpg",
     testimonial: {
-      content:
+      quote:
         "This system revolutionized how we manage patient data across our network. The synchronization is seamless and secure.",
       author: "IT Director",
       company: "Healthcare Network France",
@@ -322,7 +322,8 @@ const caseStudies = [
   },
 ]
 
-const ideas: any[] = []
+const ideas = []
+
 const users = [
   {
     id: "1",

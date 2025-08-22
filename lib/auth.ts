@@ -17,13 +17,13 @@ export interface AuthState {
 export const authenticateUser = (email: string, password: string): User | null => {
   const user = users.find((u) => u.email === email && u.password === password)
   if (user) {
-    return {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role as 'admin' | 'user',
-      avatar: user.avatar,
-    }
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role as "admin" | "user",
+        avatar: user.avatar,
+      }
   }
   return null
 }
