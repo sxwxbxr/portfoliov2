@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import FadeInSection from '../../components/FadeInSection';
 import { useAuth } from '../../components/AuthProvider';
+import { authenticateUser } from '../../lib/auth';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -12,10 +13,11 @@ export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const ok = await login(email, password);
-    if (ok) {
+    const user = authenticateUser(email, password);
+    if (user) {
+      login(user);
       router.push('/');
     } else {
       setError('Invalid credentials');

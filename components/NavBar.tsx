@@ -13,13 +13,13 @@ export default function NavBar() {
       <div className="max-w-5xl mx-auto flex items-center justify-between p-4">
         <span className="font-semibold text-lg">Seya Weber</span>
         <ul className="flex space-x-6 text-sm md:text-base items-center">
-          {navLinks.filter((n) => n.visible).map((item) => (
+          {navLinks.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
                 className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors transition-transform hover:scale-105"
               >
-                {item.label}
+                {item.name}
               </Link>
             </li>
           ))}
