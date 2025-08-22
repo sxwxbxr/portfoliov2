@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import FadeInSection from '../../components/FadeInSection';
 import { useAuth } from '../../components/AuthProvider';
@@ -12,25 +12,10 @@ export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
 
-  useEffect(() => {
-    const stored = localStorage.getItem('users');
-    if (!stored) {
-      localStorage.setItem(
-        'users',
-        JSON.stringify([
-          {
-            email: 'admin@example.com',
-            password: 'admin123',
-            role: 'admin',
-          },
-        ])
-      );
-    }
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(email, password)) {
+    const ok = await login(email, password);
+    if (ok) {
       router.push('/');
     } else {
       setError('Invalid credentials');
